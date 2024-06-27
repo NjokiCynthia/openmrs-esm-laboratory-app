@@ -1,4 +1,6 @@
+/* eslint-disable prettier/prettier */
 import {
+  OpenmrsResource,
   defineConfigSchema,
   getAsyncLifecycle,
   getSyncLifecycle,
@@ -13,6 +15,46 @@ const options = {
   featureName: "laboratory",
   moduleName,
 };
+export interface Queue {
+  uuid: string;
+  display: string;
+  name: string;
+  description: string;
+  location: Location;
+  service: Concept;
+  allowedPriorities: Array<Concept>;
+  allowedStatuses: Array<Concept>;
+}
+export interface MappedQueueEntry {
+  id: string;
+  name: string;
+  patientAge: string;
+  patientSex: string;
+  patientDob: string;
+  patientUuid: string;
+  queue: Queue;
+  priority: Concept;
+  priorityComment: string;
+  status: Concept;
+  visitType: string;
+  visitUuid: string;
+  waitTime: string;
+  queueEntryUuid: string;
+  queueLocation: string;
+  sortWeight: string;
+}
+
+export interface QueueEntrySearchCriteria {
+  queue?: Array<string> | string;
+  location?: Array<string> | string;
+  service?: Array<string> | string;
+  status?: Array<string> | string;
+  isEnded: boolean;
+}
+
+export interface Concept extends OpenmrsResource {}
+
+export interface Provider extends OpenmrsResource {}
 
 export const importTranslation = require.context(
   "../translations",
@@ -39,8 +81,21 @@ export const pickupLabRequestModal = getAsyncLifecycle(
   options
 );
 
+export const completedTestModal = getAsyncLifecycle(
+  () => import("./lab-tabs/modals/edit-queue-entry-status-modal"),
+  options
+);
+
 export const rejectLabRequestModal = getAsyncLifecycle(
   () => import("./lab-tabs/modals/reject-lab-request-modal.component"),
+  options
+);
+
+export const completedLabRequestsTable = getAsyncLifecycle(
+  () =>
+    import(
+      "./lab-tabs/data-table-extensions/completed-lab-requests-table.extension"
+    ),
   options
 );
 
@@ -56,14 +111,6 @@ export const inprogressLabRequestsTable = getAsyncLifecycle(
   () =>
     import(
       "./lab-tabs/data-table-extensions/in-progress-lab-requests-table.extension"
-    ),
-  options
-);
-
-export const completedLabRequestsTable = getAsyncLifecycle(
-  () =>
-    import(
-      "./lab-tabs/data-table-extensions/completed-lab-requests-table.extension"
     ),
   options
 );
@@ -92,6 +139,11 @@ export const addLabRequestResultsAction = getAsyncLifecycle(
 
 export const pickupLabRequestAction = getAsyncLifecycle(
   () => import("./lab-tabs/actions/pickup-lab-request-action.component"),
+  options
+);
+
+export const completedTestAction = getAsyncLifecycle(
+  () => import("./lab-tabs/actions/completed-lab-test-action.component"),
   options
 );
 

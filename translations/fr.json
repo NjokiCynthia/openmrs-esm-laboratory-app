@@ -36,6 +36,7 @@
   "pickRequest": "Pick Lab Request",
   "pickRequestConfirmationText": "Continuing will update the request status to \"In Progress\" and advance it to the next stage. Are you sure you want to proceed?",
   "pickupLabRequest": "Pickup Lab Request",
+  "sendBackPatient": "Send Back Patient",
   "previousPage": "Previous page",
   "receivedStatus": "RECEIVED",
   "reject": "Reject",
