@@ -142,11 +142,6 @@ export const pickupLabRequestAction = getAsyncLifecycle(
   options
 );
 
-export const completedTestAction = getAsyncLifecycle(
-  () => import("./lab-tabs/actions/completed-lab-test-action.component"),
-  options
-);
-
 export const rejectLabRequestAction = getAsyncLifecycle(
   () => import("./lab-tabs/actions/reject-lab-request-action.component"),
   options

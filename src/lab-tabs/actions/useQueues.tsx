@@ -61,6 +61,7 @@ export interface MappedVisitQueueEntry {
   visitType: string;
   queue: Queue;
   queueEntryUuid: string;
+  queueComingFrom?: Queue;
 }
 
 interface UseVisitQueueEntries {
@@ -95,6 +96,7 @@ export function useVisitQueueEntry(
     { data: { results: Array<VisitQueueEntry> } },
     Error
   >(apiUrl, openmrsFetch);
+  //console.log(data?.data);
   const mapVisitQueueEntryProperties = (
     visitQueueEntry: VisitQueueEntry
   ): MappedVisitQueueEntry => ({
@@ -113,6 +115,7 @@ export function useVisitQueueEntry(
     visitType: visitQueueEntry.visit?.visitType?.display,
     queue: visitQueueEntry.queueEntry.queue,
     queueEntryUuid: visitQueueEntry.queueEntry.uuid,
+    queueComingFrom: visitQueueEntry.queueEntry?.["queueComingFrom"],
   });
 
   const mappedVisitQueueEntry =
